@@ -7,7 +7,8 @@ local make_entry = require "tabman.make_entry"
 
 
 local function tabman(opts)
-    -- opts = apply_cwd_only_aliases(opts)
+    opts = opts or {}
+
     local tabnrs = vim.api.nvim_list_tabpages()
 
     if not next(tabnrs) then
