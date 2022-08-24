@@ -4,6 +4,7 @@ local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local make_entry = require "tabman.make_entry"
+local state = require('tabman.state')
 
 
 local function tabman(opts)
@@ -54,7 +55,7 @@ local function tabman(opts)
     end
 
     pickers.new(opts, {
-        prompt_title = "Tabman",
+        prompt_title = state.prompt_title,
         finder = finders.new_table {
             results = wins,
             entry_maker = opts.entry_maker or make_entry.gen_from_tabpage(opts),

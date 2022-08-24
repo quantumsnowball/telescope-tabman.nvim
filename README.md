@@ -23,7 +23,7 @@ require('telescope').load_extension('tabman')
 ## Call the Tabman picker
 To verify the installation is working, you should be able to run the picker by:
 ```vim
-:Telescop tabman
+:Telescope tabman
 ```
 Tabman as a telescope picker should be shown.
 
@@ -41,7 +41,7 @@ require('telescope').extensions.tabman.tabman(opts)
 ```
 
 ## Set you keymaps
-Tabman does not come with defaualt keymaps, your need to define your own. Example of one-time setup up with the keymap of `<leader>t` is as follows:
+Tabman does not come with default keymaps, your need to define your own. Example of one-time setup up with the keymap of `<leader>t` is as follows:
 ```lua
 use {
     'quantumsnowball/telescope-tabman.nvim',
@@ -54,4 +54,23 @@ use {
         end)
     end
 }
+```
+
+## Extension configs
+
+The following settings are currently supported:
+
+|Keys          |Type      |Descriptons          |Default  |
+|-             |-         |-                    |-        |
+|`prompt_title`|string    |set prompt title text|"Tabman" |
+
+Provide these extension settings via telescope, e.g.:
+```lua
+require('telescope').setup({
+    extensions = {
+        tabman = {
+            prompt_title = 'Tabman: find tabpages and windows'
+        }
+    } 
+})
 ```
