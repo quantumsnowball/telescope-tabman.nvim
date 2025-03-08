@@ -63,7 +63,7 @@ local function tabman(opts)
         previewer = conf.grep_previewer(opts),
         sorter = conf.generic_sorter(opts),
         default_selection_index = default_selection_index,
-        attach_mappings = function(prompt_bufnr)
+        attach_mappings = function(prompt_bufnr, map)
             -- default action on <cr> is switch to that tabpage and focus to that window
             actions.select_default:replace(function()
                 local selection = action_state.get_selected_entry()
@@ -72,6 +72,24 @@ local function tabman(opts)
                 end
                 actions.close(prompt_bufnr)
                 vim.api.nvim_set_current_win(selection.winnr)
+            end)
+
+            -- default action on x is delete the tabpage
+            map("n", "x", function()
+                local current_picker = action_state.get_current_picker(prompt_bufnr)
+                current_picker:delete_selection(function(selection)
+                    local tabpages = vim.api.nvim_list_tabpages()
+                    if #tabpages == 1 then
+                        return false
+                    end
+                    for tabnum, tabidx in ipairs(tabpages) do
+                        if tabidx == selection.tabidx then
+                            vim.cmd('tabclose ' .. tabnum)
+                            return true
+                        end
+                    end
+                    return false
+                end)
             end)
 
             return true
